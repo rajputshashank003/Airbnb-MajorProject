@@ -44,7 +44,6 @@ app.use(express.static(path.join(__dirname,"public")));
 const dbUrl = process.env.ATLASDB_URL; 
 
 
-
 // app.get("/" ,(req,res) => { 
 //     res.send("hii ! i am root ");
 // }); 
