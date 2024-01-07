@@ -21,6 +21,7 @@ const Review = require("./models/review.js");
 const listingRouter = require("./routes/listing.js"); 
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
+const searchRouter = require("./routes/search.js");
 
 const session = require("express-session");
 const flash = require("connect-flash");
@@ -106,44 +107,7 @@ app.use((req,res ,next) => {
 app.use("/listings" , listingRouter);
 app.use("/listings/:id/reviews" , reviewRouter);
 app.use("/" , userRouter);
-app.post("/searched" , async (req, res) => {
-    function checkFor ( str1,str2) {
-        const lowerCaseStr1 = str1.toLowerCase();
-        const lowerCaseStr2 = str2.toLowerCase();
-
-        // Remove spaces from both strings
-        const noSpaceStr1 = lowerCaseStr1.replace(/\s/g, '');
-        const noSpaceStr2 = lowerCaseStr2.replace(/\s/g, '');
-
-        // Compare the two strings
-        return noSpaceStr1 === noSpaceStr2;
-    };
-    
-    const input = req.body.input;
-
-    let allLists = await Listing.find({}); 
-    // console.log(allLists);
-    let count2 = 0;
-    let filteredLists  = [];
-    
-    for(list of allLists){
-        let i = input.toLowerCase();
-        l = list.country.toLowerCase();
-        let count = 0;
-        if(checkFor(l,i)){
-            filteredLists.push(list);
-        }
-    }
-    allLists = filteredLists;
-    if(allLists.length == 0){
-        req.flash("error" , "No listing found !");
-        res.redirect("/listings");
-    } else {
-        res.render("listings/index.ejs", {allLists});
-    }
-});
-
-
+app.use("/searched", searchRouter);
 
 main()
     .then( () => { 

@@ -88,11 +88,12 @@ module.exports.updateListing = async (req,res) => { // validate listing act as m
 
     let {id} = req.params;
     let listing = await Listing.findByIdAndUpdate(id, {...req.body.listing}); // converting every object from request from body from listings into element update in listings database 
-    
+    console.log(req.body);
     if(typeof req.file !== "undefined"){ 
         let url = req.file.path;
         let filename = req.file.filename;
         listing.image = {url, filename};
+        await listing.save();
     }
 
     req.flash("success" , "Listing Updated! ");

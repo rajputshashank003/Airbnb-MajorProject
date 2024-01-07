@@ -4,42 +4,6 @@
     <!-- <form method="GET" action="/listings/new">
         <button type="submit">create new listing</button>
     </form> -->
-    <style>
-        #filters {
-            display: flex;
-            align-items: center;
-            overflow: scroll;
-
-        }
-        #filters::-webkit-scrollbar {
-            display: none;
-          }
-        .filter {
-            text-align: center ;
-            margin-right: 2rem;
-            margin-top: 2rem;
-            opacity : 0.7;
-        }
-
-        .filter:hover {
-            opacity : 1;
-            cursor : pointer;
-        }
-        
-        .tax-info{
-            display: none;
-        }
-
-        .tax-toggle {
-            border: 1px solid black;
-            border-radius: 1rem;
-            height: 3rem;
-            padding:1rem;   
-            display: flex;
-            align-items: center;
-            margin-right: 1rem;
-        }
-    </style>
 
     <div id="filters">
 
@@ -110,7 +74,8 @@
                             <b><%=listing.title%> </b>
                             <br>
                             &#8377;<%=listing.price.toLocaleString("en-In")%>
-                            <i class="tax-info"> &nbsp; &nbsp;+18% GST</i>
+                            <br>
+                            <i class="tax-info"> +18% GST ( &#8377;<%= (listing.price /100 + listing.price).toLocaleString("en-In") %>)</i>
                         </p>
                     </div>
                 </div>

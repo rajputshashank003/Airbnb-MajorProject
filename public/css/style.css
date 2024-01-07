@@ -126,6 +126,60 @@ body{
 /* Maps */
 
 #myMap {
-    width:80vh;
+    width:70vh;
     height:400px;
 }
+
+.mapBottom {
+    background-color: aliceblue;
+    width: 70vh;
+}
+
+/* Media query for medium screens */
+@media only screen and (min-width: 100px) and (max-width: 500px) {
+    #myMap {
+        width:40vh;
+        height:300px;
+    }
+    .mapBottom {
+        width:40vh;
+    }
+}
+
+/* index.ejs */
+
+#filters {
+    display: flex;
+    align-items: center;
+    overflow: scroll;
+
+}
+#filters::-webkit-scrollbar {
+    display: none;
+  }
+.filter {
+    text-align: center ;
+    margin-right: 2rem;
+    margin-top: 2rem;
+    opacity : 0.7;
+}
+
+.filter:hover {
+    opacity : 1;
+    cursor : pointer;
+}
+
+.tax-info{
+    display: none;
+}
+
+.tax-toggle {
+    border: 1px solid black;
+    border-radius: 1rem;
+    height: 3rem;
+    padding:1rem;   
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+}
+
