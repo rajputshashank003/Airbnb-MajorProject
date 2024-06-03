@@ -1,6 +1,6 @@
 {
-  "engines" : {
-    "node" : "18.17.1"
+  "engines": {
+    "node": "18.17.1"
   },
   "name": "majorproject",
   "version": "1.0.0",
@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@multiavatar/multiavatar": "^1.0.7",
     "@types/bingmaps": "^0.0.1",
     "axios": "^1.6.3",
     "bingmaps": "^2.0.3",

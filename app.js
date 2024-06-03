@@ -35,6 +35,7 @@ const Listing = require("./models/listing");
 
 const { rmSync } = require("fs");
 const { serialize } = require("v8");
+const { isLoggedIn } = require("./middleware.js");
 app.set("view engine" ,"ejs");
 app.set("views",path.join(__dirname,"views"));
 app.use(express.urlencoded({extended : true}));
@@ -43,7 +44,7 @@ app.engine("ejs",ejsMate);
 app.use(express.static(path.join(__dirname,"public")));   
 
 const dbUrl = process.env.ATLASDB_URL; 
-
+// const dbUrl = "mongodb://127.0.0.1:27017/wanderlust";
 
 // app.get("/" ,(req,res) => { 
 //     res.send("hii ! i am root ");
@@ -56,7 +57,7 @@ const store = MongoStore.create({
     },
     touchAfter : 24 * 3600 ,
 });
-
+ 
 store.on("error" , () => {
     console.log("ERROR in mongo-session-store" , error);
 });
@@ -109,18 +110,90 @@ app.use("/listings/:id/reviews" , reviewRouter);
 app.use("/" , userRouter);
 app.use("/searched", searchRouter);
 
+const multiavatar = require('@multiavatar/multiavatar');
+
+
 main()
     .then( () => { 
         console.log("connected to database");
     }) 
     .catch(err=> { 
         console.log(err);
+        console.log("error agya bhai database connection me !");
     });
 
 
 async function main() {
     await mongoose.connect(dbUrl);
 }
+
+app.get("/",(req, res) => {
+    res.redirect("/listings");
+});
+app.get("/currprofile" , isLoggedIn, async (req,res) => {
+    const avatar = multiavatar(`87656${Math.round(Math.random() * 1000)}`);
+
+    let filteredLists  = [];
+    let filteredLists2  = [];
+    let count = 0;
+    if(res.locals.currUser){
+        const input = res.locals.currUser.username;
+        const allLists = await Listing.find({})
+            .populate({
+                path : "reviews" ,
+                populate : {
+                    path : "author",
+                }
+            })
+            .populate("owner");
+
+        function matchWords(paragraph1, paragraph2) {
+            const words1 = paragraph1.split(" ");
+            const words2 = paragraph2.split(" ");
+            const matches = {};
+            for (const word1 of words1) {
+                for (const word2 of words2) {
+                    if (word1 === word2) {
+                    matches[word1] = word2;
+                    }
+                }
+            }
+            return matches;
+        }
+        for(list of allLists){
+            if(list.reviews[0] && list.reviews[0].author.username){
+                i = input.toLowerCase();
+                l = list.reviews[0].author.username.toLowerCase();
+                let val4 = matchWords(l,i);
+
+                if(Object.keys(val4).length >= 1){
+                    filteredLists.push(list);
+                    count++;
+                }
+            }
+        }
+
+        for(list of allLists){
+                i = input.toLowerCase();
+                l = list.owner.username.toLowerCase();
+                let val4 = matchWords(l,i);
+
+                if(Object.keys(val4).length >= 1){
+                    filteredLists2.push(list);
+                    count++;
+                }
+        }
+
+    }
+    
+    res.render("users/currProfile.ejs" , {filteredLists , count , filteredLists2, avatar});
+
+});
+app.get("/editProfile" ,(req, res) => {
+    req.flash("success", " Page in developing phase !");
+    res.redirect("/currProfile");   
+});
+
 
 
 app.all("*",(req,res,next) => {

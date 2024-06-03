@@ -183,3 +183,14 @@ body{
     margin-right: 1rem;
 }
 
+
+/* currProfile */
+
+.currProfile-list{
+    text-decoration: none;
+    color: black;
+}
+
+.currProfile-list:hover{
+    color : red;
+}

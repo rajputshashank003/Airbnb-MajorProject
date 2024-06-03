@@ -1,0 +1,92 @@
+<%layout("/layouts/boilerplate")%>
+
+<section class="h-100 gradient-custom-2">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-lg-9 col-xl-7">
+                <div class="card">
+                    <div class="rounded-top text-white d-flex flex-row" style="background-color: #000;background-image : url('https://res.cloudinary.com/db8sjqkbg/image/upload/v1704375199/wanderlust_DEV/bd37kerc8zrnhdeb9eav.jpg') ; height:200px;">
+                        <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
+                            <!-- <img src="https://res.cloudinary.com/db8sjqkbg/image/upload/v1704718274/wanderlust_DEV/qqsbtr2a4smsvglb2nmo.jpg"
+                            alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
+                            style="width: 150px; z-index: 1"
+                            > -->
+                            <div class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px; z-index: 1 ; border-radius:50%"><%-avatar%></div>
+                            <form method="GET" action="/editProfile" style="z-index: 1;">
+                                <button type="submit" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
+                                style="z-index: 1;">
+                                    Edit profile
+                                </button>
+                            </form>
+                        </div>
+                    <div class="ms-3" style="margin-top: 130px;">
+                        <% if(currUser) { %>
+                            <h5><b><%= currUser.username %> </b></h5>
+                            <p><i><%= currUser.email %></i></p>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="p-4 mb-2 text-black" style="background-color: #f8f9fa;">
+              
+                </div>
+
+                <div class="card-body p-4 text-black">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <p class="lead fw-normal mb-0"><b>Created Listings : </b></p>
+                    </div>
+                    <% if(filteredLists.length > 0) { %>
+                        <div class="row">
+                            <% for(list of filteredLists2) { %>
+                                <div class="card col-5 ms-3 mb-3">
+                                    <div class="card-body">   
+                                        <p class="card-text"> 
+                                            <b>Listing : </b>
+                                            <i>
+                                                <a class="currProfile-list" href="/listings/<%=list.id%>"><%= list.title %></a>
+                                            </i>
+                                        </p>
+                                    </div>
+                                </div>
+                            <% } %>
+                        </div>
+                    <% } else { %>
+                        <p class="lead fw-normal mb-0"><i>No Listing found ! </i> &nbsp; &nbsp;<a class="currProfile-list" href="/listings/new">Create New</a></p>
+                    <% } %>
+                    
+                </div>
+
+                <div class="card-body p-4 text-black">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <p class="lead fw-normal mb-0"><b>Uploaded Reviews : </b></p>
+                    </div>
+                    <% if(filteredLists.length > 0) { %>
+                        <div class="row">
+                            <% let i = 1; %>
+                            <% for(list of filteredLists) { %>
+                                <% if(i > 10){ %>
+                                    <% break %>
+                                <% } %>
+                                <% i++; %>
+                                <div class="card col-5 ms-3 mb-3">
+                                    <div class="card-body">   
+                                        <p class="card-text"> 
+                                            <b>Listing : </b>
+                                            <i>
+                                                <a class="currProfile-list" href="/listings/<%=list.id%>"><%= list.title %></a>
+                                            </i>
+                                        </p>    
+                                        <p class="card-text"><b>Ratings :</b> </p>                                  
+                                        <p class="starability-result card-text" data-rating = "<%= list.reviews[0].rating %>"></p>
+                                        <p class="card-text"> <b>comment :</b> <br> <%= list.reviews[0].comment%></p>
+                                    </div>
+                                </div>
+                            <% } %>
+                        </div>
+                    <% } else { %>
+                        <p class="lead fw-normal mb-0"><i>No Review found !</i></p>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
