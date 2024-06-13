@@ -42,16 +42,13 @@ Welcome to the Airbnb Clone project, a web application built to replicate key fe
 
 ![Home Page](image.png)
 
-## Installation
-
-To set up the project locally, you'll need to clone and run both the front-end and back-end repositories. Follow these steps:
-
 ## Setup Instructions
+    To set up the project locally, you'll need to clone and run therepository. Follow these steps:
 
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/rajputshashank003/Chess.v.0.2.1.git
+   git clone https://github.com/rajputshashank003/Airbnb-MajorProject.git
    cd Airbnb-MajorProject
    npm install 
    node app.js
