@@ -1,5 +1,13 @@
 <%layout("/layouts/boilerplate")%>
-
+<style>
+    @media only screen and (min-width: 100px) and (max-width: 410px) {
+        .username-email {
+            margin: 0% !important;
+            position: relative;
+            right: 50%;
+        }
+    }
+</style>
 <section class="h-100 gradient-custom-2">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -19,7 +27,7 @@
                                 </button>
                             </form>
                         </div>
-                    <div class="ms-3" style="margin-top: 130px;">
+                    <div class="username-email ms-3" style="margin-top: 130px;">
                         <% if(currUser) { %>
                             <h5><b><%= currUser.username %> </b></h5>
                             <p><i><%= currUser.email %></i></p>

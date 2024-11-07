@@ -126,24 +126,13 @@ body{
 /* Maps */
 
 #myMap {
-    width:70vh;
+    width:90vh;
     height:400px;
 }
 
 .mapBottom {
     background-color: aliceblue;
-    width: 70vh;
-}
-
-/* Media query for medium screens */
-@media only screen and (min-width: 100px) and (max-width: 500px) {
-    #myMap {
-        width:40vh;
-        height:300px;
-    }
-    .mapBottom {
-        width:40vh;
-    }
+    width: 90vh;
 }
 
 /* index.ejs */
@@ -187,10 +176,52 @@ body{
 /* currProfile */
 
 .currProfile-list{
-    text-decoration: none;
+    font-weight: bolder;
     color: black;
 }
 
 .currProfile-list:hover{
     color : red;
 }
+
+.show-all-listing-map {
+    position: fixed;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+    opacity: 1;
+    background-color: black;
+    color: white;
+    border-radius: 20px;
+    padding: 1%;
+    text-decoration: none;
+    cursor: pointer;
+}
+.show-all-listing-map:hover{
+    padding: 1.5%;
+    transition: all 0.5s ease-in-out;
+}
+.show-all-listing-map i{
+   text-decoration: none;
+   font-size: 1.5rem;
+   margin:4px
+}
+
+
+/* Media query for medium screens */
+@media only screen and (min-width: 100px) and (max-width: 500px) {
+    #myMap {
+        width:40vh;
+        height:300px;
+    }
+    .mapBottom {
+        width:40vh;
+    }
+}
+

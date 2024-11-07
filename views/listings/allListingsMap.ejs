@@ -1,0 +1,105 @@
+<% layout("/layouts/boilerplate") %>
+<style>
+    #myMap{
+        height:100vh; 
+        width:100%; 
+    }
+    .map-card{
+        margin: 0px;
+        width: 100%;
+    }
+    @media only screen and (min-width: 100px) and (max-width: 500px) {
+        #myMap {
+            width: 20rem !important;
+            height: 40rem !important;
+        }
+        .map-card {
+            width: 90% !important;
+        }
+        .map-card{
+            offset: 1;
+            margin: auto;
+            width: 90%; 
+        }
+    }
+</style>
+
+<script>
+    // Get the coordinates passed from the server
+    const listings = <%- JSON.stringify(listings) %>;
+    console.log("Listings :", listings);
+
+    // Initialize the map
+    var map;
+
+    function GetMap() {
+        map = new Microsoft.Maps.Map('#myMap', {
+            center: new Microsoft.Maps.Location(0, 0),  // Set a default center in case coordinates are off-screen
+            zoom: 5,
+        });
+
+        // Add each coordinate as a red pin on the map
+        listings.forEach(listing => {
+            if (listing.geometry.coordinates.length === 2) {
+                const location = new Microsoft.Maps.Location(listing.geometry.coordinates[0], listing.geometry.coordinates[1]);
+                var pin = new Microsoft.Maps.Pushpin(location, {
+                    color: 'red'
+                });
+                
+                var infobox = new Microsoft.Maps.Infobox(location, { 
+                    title: listing.title, 
+                    description : "Exact location will be provided after booking", 
+                    visible: false 
+                });
+                infobox.setMap(map);
+                Microsoft.Maps.Events.addHandler(pin, 'mouseover', function (e) {
+                    e.target.setOptions({ color: "blue" });
+                    infobox.setOptions({ visible: true });
+                });
+
+                Microsoft.Maps.Events.addHandler(pin, 'mouseout', function (e) {
+                    // Remove the infobox from the map.
+                    e.target.setOptions({ color: "red" });
+                    infobox.setOptions({ visible: false });
+                });
+
+                map.entities.push(pin);
+            }
+        });
+
+        // Adjust the map view to show all pins
+        var bounds = new Microsoft.Maps.LocationRect();
+        listings.forEach(coordinate => {
+            if (coordinate.length === 2) {
+                const location = new Microsoft.Maps.Location(coordinate[0], coordinate[1]);
+                bounds = bounds.getBoundingBox(location);
+            }
+        });
+        map.setView({ bounds: bounds });
+    }
+
+    // Call the function to initialize the map when the page loads
+    window.onload = function () {
+        GetMap();
+    };
+</script>
+
+<div class="map-card col-8 offset-3 mb-3">
+    <h3>Where you'll be</h3>
+    <div id="myMap" ></div>
+    <a class="show-all-listing-map" href="/listings">
+        Show Lists <i class="fa-solid fa-list"></i>
+    </a>
+</div>
+<script>
+    let showAllListingMap = document.querySelector('.show-all-listing-map');
+    window.addEventListener('scroll', () => {
+        let scrollThreshold = (document.documentElement.scrollHeight - window.innerHeight) * 0.6;
+
+        if (window.scrollY >= scrollThreshold) {
+            showAllListingMap.style.opacity = '0';
+        } else {
+            showAllListingMap.style.opacity = '1';
+        }
+    });
+</script>

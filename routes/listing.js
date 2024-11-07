@@ -22,6 +22,7 @@ router
         wrapAsync(listingController.createListing)
     );
 
+router.get("/allListingsMap" , wrapAsync(listingController.allListingsMap))
 
 
 // to make new route listing here isloggesin works as middleware for checking authentication 
@@ -31,7 +32,7 @@ router
     .route("/:id")
     .get(wrapAsync(listingController.showListing)) // show route : print the data of any individual listing 
     .put(                                          // update route
-        isLoggedIn ,
+        isLoggedIn ,    
         isOwner,
         upload.single("listing[image]"),
         validateListing ,
@@ -62,7 +63,6 @@ router.get("/:id/edit",
 //     validateListing,
 //     wrapAsync(listingController.createListing)
 // );
-
 
 
 

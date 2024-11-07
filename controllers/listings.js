@@ -108,3 +108,7 @@ module.exports.destroyListing = async (req,res) => {
     res.redirect("/listings");
 };
 
+module.exports.allListingsMap = async (req, res) => {
+    const listings = await Listing.find();
+    res.render("listings/allListingsMap.ejs", {listings});
+}

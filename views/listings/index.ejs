@@ -16,9 +16,9 @@
 
         <div class="filter ">
             <div><i class="fa-solid fa-fire"></i></div>
-            <p>Trending</p>
+            <a style="text-decoration: none; color: black;" href="/editProfile">Trending</a>
         </div>
-        <div class="filter ">
+        <div class="filter">
             <div><i class="fa-solid fa-bed"></i></div>
             <p>Rooms</p>
         </div>
@@ -73,7 +73,7 @@
                         <p class="card-text">
                             <b><%=listing.title%> </b>
                             <br>
-                            &#8377;<%=listing.price.toLocaleString("en-In")%>
+                            &#8377;<%=listing.price.toLocaleString("en-In")%> (per night)
                             <br>
                             <i class="tax-info"> +18% GST ( &#8377;<%= (listing.price /100 + listing.price).toLocaleString("en-In") %>)</i>
                         </p>
@@ -82,6 +82,10 @@
             </a>
         <% } %>
     </div>
+
+    <a class="show-all-listing-map" href="/listings/allListingsMap">
+        Show Map <i class="fa-solid fa-map"></i>
+    </a>
 
     <script>
         let taxSwitch = document.getElementById("flexSwitchCheckDefault");
@@ -96,3 +100,19 @@
             }
         });
     </script>
+    <script>
+        let showAllListingMap = document.querySelector('.show-all-listing-map');
+        window.addEventListener('scroll', () => {
+            let scrollThreshold = (document.documentElement.scrollHeight - window.innerHeight) * 0.8;
+
+            if (window.scrollY >= scrollThreshold) {
+                showAllListingMap.style.opacity = '0';
+            } else {
+                showAllListingMap.style.opacity = '1';
+            }
+        });
+    </script>
+    
+    
+    
+    
