@@ -6,7 +6,7 @@ const router = express.Router();
 
 router
     .route("/")
-    .get(wrapAsync(listingController.index))
+    .get(wrapAsync(listingController.temp))
 
 
 module.exports = router;

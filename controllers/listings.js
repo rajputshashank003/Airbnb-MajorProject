@@ -2,6 +2,10 @@ const Listing = require("../models/listing");
 const axios = require('axios');
 const apiKey = process.env.MAP_TOKEN;
 
+module.exports.temp = async (req, res) => { // render all listings 
+    const allLists = await Listing.find({});
+    return allLists;
+};
 
 module.exports.index = async (req,res) => { // render all listings 
     const allLists = await Listing.find({}); 
