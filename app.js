@@ -1,7 +1,7 @@
 if(process.env.NODE_ENV != "production"){
     require("dotenv").config();
 }
-
+const cors = required('cors');
 const express = require("express");
 const app = express();
 
@@ -42,6 +42,7 @@ app.use(express.urlencoded({extended : true}));
 app.use(methodOverride("_method"));
 app.engine("ejs",ejsMate);
 app.use(express.static(path.join(__dirname,"public")));   
+app.use(cors({ origin: '*' }));
 
 const dbUrl = process.env.ATLASDB_URL; 
 // const dbUrl = "mongodb://127.0.0.1:27017/wanderlust";
