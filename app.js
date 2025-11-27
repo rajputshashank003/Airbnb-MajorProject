@@ -22,6 +22,7 @@ const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 const searchRouter = require("./routes/search.js");
+const tempRouter = require("./routes/temp.js");
 
 const session = require("express-session");
 const flash = require("connect-flash");
@@ -110,6 +111,7 @@ app.use("/listings" , listingRouter);
 app.use("/listings/:id/reviews" , reviewRouter);
 app.use("/" , userRouter);
 app.use("/searched", searchRouter);
+app.use("/temp", tempRouter);
 
 const multiavatar = require('@multiavatar/multiavatar');
 
